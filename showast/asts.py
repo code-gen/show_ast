@@ -16,7 +16,7 @@ def _strip_docstring(body):
 
 def recurse_through_ast(node, handle_ast, handle_terminal, handle_fields, handle_no_fields, omit_docstrings):
     possible_docstring = isinstance(node, (ast.FunctionDef, ast.ClassDef, ast.Module))
-    
+
     node_fields = zip(
         node._fields,
         (getattr(node, attr) for attr in node._fields)
@@ -24,21 +24,21 @@ def recurse_through_ast(node, handle_ast, handle_terminal, handle_fields, handle
     field_results = []
     for field_name, field_value in node_fields:
         if isinstance(field_value, ast.AST):
-            field_results.append(handle_ast(field_value))
-        
+            field_results.append(handle_ast(field_value, field_name=field_name))
+
         elif isinstance(field_value, list):
             if possible_docstring and omit_docstrings and field_name == 'body':
                 field_value = _strip_docstring(field_value)
             field_results.extend(
-                handle_ast(item)
+                handle_ast(item, field_name=field_name)
                 if isinstance(item, ast.AST) else
                 handle_terminal(item)
                 for item in field_value
             )
-        
+
         elif isinstance(field_value, _basestring):
             field_results.append(handle_terminal('"{}"'.format(field_value)))
-            
+
         elif field_value is not None:
             field_results.append(handle_terminal(field_value))
 

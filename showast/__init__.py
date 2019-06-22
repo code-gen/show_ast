@@ -6,8 +6,8 @@ import inspect
 
 from IPython.core.magic import register_cell_magic
 from IPython.display import display
-    
-    
+
+
 __all__ = ['show_ast', 'show_source', 'Settings', 'Renderers',]
 
 
@@ -17,7 +17,7 @@ RENDERING_PATH = os.path.join(os.path.dirname(__file__), 'rendering')
 class Renderers:
     graphviz = 'graphviz', [RENDERING_PATH]
     nltk = 'nltk', [RENDERING_PATH]
-    
+
 
 Settings = dict(
     # Styling options:
@@ -34,8 +34,8 @@ Settings = dict(
     # Rendering engine is expected to expose "render" function
     renderer=Renderers.graphviz,
 )
-        
-        
+
+
 def show_ast(module, settings=Settings):
     omit_docstrings = settings['omit_docstrings']
     if settings['omit_module'] and len(module.body) == 1:
@@ -43,7 +43,7 @@ def show_ast(module, settings=Settings):
     else:
         node = module
     renderer = imp.load_module(
-        'renderer', 
+        'renderer',
         *imp.find_module(*settings['renderer'])
     )
     display(renderer.render(node, settings))

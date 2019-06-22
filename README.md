@@ -1,12 +1,12 @@
-# showast
-[![PyPI version](https://badge.fury.io/py/showast.svg)](https://badge.fury.io/py/showast)
-[![Liberapay receiving](https://img.shields.io/liberapay/receives/hchasestevens.svg)](https://liberapay.com/hchasestevens/)
+# `showast`
 
 An IPython/Jupyter notebook plugin for visualizing abstract syntax trees.
 
-Example usage
---------------
-Examples can be found in [this IPython notebook](https://github.com/hchasestevens/show_ast/blob/master/Example.ipynb).
+**Added detailed info for nodes (see example below).**
+
+## Example
+
+See [example.ipynb](https://nbviewer.jupyter.org/github/code-gen/show_ast/blob/master/example.ipynb).
 
 ```python
 import showast
@@ -14,24 +14,19 @@ import showast
 
 ```python
 %%showast
-print 1 + 2
-```
-![print 1 + 2 AST](http://i.imgur.com/vK3XTkX.png)
-
-```python
-from showast import show_source
-import antigravity
-show_source(antigravity)
-```
-![antigravity module AST](http://i.imgur.com/NJY6xhw.png)
-
-Installation
--------------
-```
-pip install showast
+x = self.func(1, 'test', var)
 ```
 
-showast has the following Python dependencies:
+![example](https://i.imgur.com/KgL7ZGC.png)
+
+
+## Installation
+In the cloned repo directory, do
+```
+pip install .
+```
+
+`showast` has the following Python dependencies:
 ```
 ipython
 graphviz
@@ -46,8 +41,6 @@ pillow
 ```
 When using this option, you will additionally need to have [Ghostscript](http://ghostscript.com/download/gsdnld.html) installed.
 
-Contacts
---------
-
+## Credits
 * Name: [H. Chase Stevens](http://www.chasestevens.com)
 * Twitter: [@hchasestevens](https://twitter.com/hchasestevens)

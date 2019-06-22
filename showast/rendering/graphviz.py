@@ -26,39 +26,44 @@ def _attach_to_parent(parent, graph, names, label, name=None, **style):
         graph.edge(parent, node_name, sametail='t{}'.format(parent))
 
 
-def handle_ast(node, parent_node, graph, names, omit_docstrings, terminal_color, nonterminal_color):
+def handle_ast(node, parent_node, graph, names, omit_docstrings, terminal_color, nonterminal_color, field_name=None):
     attach_to_parent = partial(
         _attach_to_parent,
         graph=graph,
         names=names,
     )
     node_name = next(names)
+
+    _label = _bold(node.__class__.__name__)
+    if field_name is not None:
+        _label = '%s\n[%s]' % (node.__class__.__name__, field_name)
+
     attach_to_parent(
         parent=parent_node,
-        label=_bold(node.__class__.__name__),
+        label=_label,
         name=node_name,
         fontcolor=nonterminal_color,
     )
     recurse_through_ast(
-        node, 
+        node,
         partial(
-            handle_ast, 
+            handle_ast,
             parent_node=node_name,
             graph=graph,
             names=names,
-            omit_docstrings=omit_docstrings, 
-            terminal_color=terminal_color, 
+            omit_docstrings=omit_docstrings,
+            terminal_color=terminal_color,
             nonterminal_color=nonterminal_color,
-        ), 
+        ),
         partial(
-            handle_terminal, 
+            handle_terminal,
             attach_to_parent=partial(
-                attach_to_parent, 
-                parent=node_name, 
+                attach_to_parent,
+                parent=node_name,
                 fontcolor=terminal_color,
             ),
-        ), 
-        handle_fields, 
+        ),
+        handle_fields,
         partial(
             handle_no_fields,
             parent_node=node_name,
@@ -118,7 +123,7 @@ def render(node, settings):
     graph.node_attr.update(dict(
         fontname=settings['font'],
         shape=settings['shape'],
-        #height='0.25',  # TODO: how to incorporate with scale param?
+        # height='0.25',  # TODO: how to incorporate with scale param?
         #fixedsize='true',
     ))
 
