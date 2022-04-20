@@ -1,5 +1,7 @@
 # `showast`
 
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 An IPython/Jupyter notebook plugin for visualizing abstract syntax trees.
 
 **Added detailed info for nodes (see example below).**
